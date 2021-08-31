@@ -51,8 +51,7 @@ public class GameMechanic : MonoBehaviour
         }
     }
 
-
-
+    
     public void ChangeImage(int numberCell)
     {
         int firstIndex = 0;
@@ -85,13 +84,15 @@ public class GameMechanic : MonoBehaviour
         if (MarkedCellMass[index1,index2] == _whoMarkedCell  &&  NumberSprite == PC)
         {
             _stateWinPC += 1;
-            _draw += 1;
         }
         if (MarkedCellMass[index1,index2] == _whoMarkedCell && NumberSprite == Player)
         {
             _stateWinPlayer += 1;
-            _draw += 1;
         }
+
+        if (MarkedCellMass[index1, index2] != CellStatus.None)
+            _draw += 1;
+        
         if (_stateWinPC == SizeSide)
         {
             Debug.Log("Pc win");
@@ -106,7 +107,7 @@ public class GameMechanic : MonoBehaviour
             rawImageForGame.SetActive(true);
             _gameOver = true;
         }
-        if (_draw == SizeSide * SizeSide)
+        if (_draw == SizeSide * SizeSide && _gameOver != true)
         {
             Debug.Log("Draw");
             rawImageForGame.SetActive(true);
@@ -142,16 +143,16 @@ public class GameMechanic : MonoBehaviour
                 _stateWinPlayer = 0;
                 _stateWinPC = 0;
             }
-            
-            _draw = 0;
-        
 
+            _draw = 0;
+            
             for (int i = 0; i < SizeSide; i++)
             {
                 CheckArea(i,i);
             }
             _stateWinPlayer = 0;
             _stateWinPC = 0;
+            _draw = 0;
         
         
             for (int i = 0; i < SizeSide; i++)
@@ -161,6 +162,7 @@ public class GameMechanic : MonoBehaviour
             }
             _stateWinPlayer = 0;
             _stateWinPC = 0;
+            _draw = 0;
             
         }
 

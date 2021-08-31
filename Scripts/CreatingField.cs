@@ -14,13 +14,9 @@ public class CreatingField : MonoBehaviour
     [SerializeField] private GameMechanic gameMechanic;
     [SerializeField] private GridLayoutGroup gridLayout;
     [NonSerialized] public int CellsCount;
-    private List<CellStatus> _markedCell = new List<CellStatus>();
     private const float _ScaleGrid = 10f;
 
-
     
-   
-
     public  void CreateField(int mapSize)
     {
         CellsCount = mapSize * mapSize;

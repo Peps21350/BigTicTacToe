@@ -64,7 +64,7 @@ public class GameUI : MonoBehaviour
     public void OpenGUI( bool win)
     {
         _show = true;
-        this._win = win;
+        _win = win;
     }
 
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,18 @@ public class GameMenu : MonoBehaviour
     [SerializeField] private GameObject menu;
     [SerializeField] private GameMechanic gameMechanic;
     [SerializeField] private CreatingField creatingField;
+    [NonSerialized] public bool IsRestart = false;
 
-    
+    private void Start()
+    {
+        if (IsRestart == true)
+        {
+            menu.SetActive(false);
+            choiceSide.SetActive(false);
+            choiceTypeGame.SetActive(true);
+        }
+    }
+
     public void StartGame()
     {
         menu.SetActive(false);
@@ -55,6 +66,11 @@ public class GameMenu : MonoBehaviour
     {
         choiceTypeGame.SetActive(false);
         creatingField.CreateField(15);
+    }
+
+    public void CloseApplication()
+    {
+        Application.Quit();
     }
 
 }
