@@ -2,50 +2,53 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static Unity.Mathematics.math;
 using Button = UnityEngine.UI.Button;
-using Image = UnityEngine.UI.Image;
+
 
 public class CreatingField : MonoBehaviour
 {
+    [SerializeField] private Button imageField;
+    [SerializeField] private GameObject gameParent;
+    [NonSerialized] public Button[] SelectCell;
+    [SerializeField] private GameMechanic gameMechanic;
+    [SerializeField] private GridLayoutGroup gridLayout;
+    [NonSerialized] public int CellsCount;
+    private List<CellStatus> _markedCell = new List<CellStatus>();
+    private const float _ScaleGrid = 10f;
 
-    [SerializeField] private Button imagesFields;
-    [SerializeField] private GameObject _gameParent;
-    [NonSerialized] public Button[] _selectCell;
-    [SerializeField] private GameMechanic _gameMechanic;
-    [SerializeField] private Sprite[] _sprites;
-    [SerializeField] private CellIndicator _cellIndicator;
-    [SerializeField] private GridLayoutGroup _gridLayout;
+
     
+   
+
     public  void CreateField(int mapSize)
     {
-        int cellsCount = mapSize * mapSize;
-        _selectCell = new Button[cellsCount];
+        CellsCount = mapSize * mapSize;
+        SelectCell = new Button[CellsCount];
 
-        _gridLayout.enabled = true;
-        _gridLayout.constraintCount = mapSize;
-        _gridLayout.transform.localScale = Vector3.one * 1.0f / mapSize * 10;
+        gridLayout.enabled = true;
+        gridLayout.constraintCount = mapSize;
+        gridLayout.transform.localScale = Vector3.one  / mapSize * _ScaleGrid;
+        
+        GameMechanic.SizeSide = mapSize;
+        gameMechanic.SetMarkedCell();
 
-        for (int i = 0; i < cellsCount; i++)
+        for (int i = 0; i < CellsCount; i++)
         {
-            _selectCell[i] = Instantiate(imagesFields, _gameParent.transform);
-            _selectCell[i].GetComponent<CellIndicator>().numberCell = i;
-            int index_cache = i;
-            _selectCell[i].onClick.AddListener(() => _gameMechanic.ChangeImage(index_cache));
+            SelectCell[i] = Instantiate(imageField, gameParent.transform);
+            SelectCell[i].GetComponent<CellIndicator>().numberCell = i;
+            int indexCache = i;
+            SelectCell[i].onClick.AddListener(() => gameMechanic.ChangeImage(indexCache));
         }
 
-        StartCoroutine(waitFor1Frame());
-
-        IEnumerator waitFor1Frame()
+        StartCoroutine(WaitFor1Frame());
+        
+        IEnumerator WaitFor1Frame()
         {
             yield return new WaitForEndOfFrame();
-            _gridLayout.enabled = false;
+            gridLayout.enabled = false;
         }
     }
     
     
-
 }

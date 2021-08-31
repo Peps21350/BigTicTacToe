@@ -10,6 +10,7 @@ public class GameMenu : MonoBehaviour
     [SerializeField] private GameMechanic gameMechanic;
     [SerializeField] private CreatingField creatingField;
 
+    
     public void StartGame()
     {
         menu.SetActive(false);
@@ -18,7 +19,7 @@ public class GameMenu : MonoBehaviour
 
     public void ZeroSelection()
     {
-        gameMechanic.Player = 0;
+        gameMechanic.PC = 2;
         menu.SetActive(false);
         choiceSide.SetActive(false);
         choiceTypeGame.SetActive(true);
@@ -26,7 +27,7 @@ public class GameMenu : MonoBehaviour
     
     public void CrossSelection()
     {
-        gameMechanic.Player = 1;
+        gameMechanic.Player = 2;
         menu.SetActive(false);
         choiceSide.SetActive(false);
         choiceTypeGame.SetActive(true);
